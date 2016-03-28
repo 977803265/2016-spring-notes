@@ -1,0 +1,56 @@
+# 设计模式
+
+### Strategy Pattern
+处理差异性。就用聚合
+
+超过2个差异行为：做成多个策略树
+
+行为组存在差异性：比如有E一定是G。。那么把E和G组合起来即可
+
+属性存在差异性：把getter setter拿出来
+
+对象集的行为需要协作对象完成但是协作对象存在差异性：差异性在行为上不在协作对象上。这时应该把行为做成策略，多个行为。Command模式。比如Undo，Redo
+
+因为属性的取值存在差异？首先把属性拿出去，其次使用行为组。State可以存在重合现象
+
+当策略发生改变时，谁负责改变context里面的引用？谁持有信息谁负责。
+
+- 外界
+- 在context当中。比如通过计算。自己改，没有set方法
+- 协作者修改。
+
+创建和撤销策略。	
+
+
+### OCP 开闭原则
+
+
+### Adapter
+
+### Mediator 中介模式
+规则定义而复杂的交流。各种倚赖
+
+### Proxy Pattern
+remote virtual protection
+
+Remote Proxy：A->BProxy->BProxy->...->B
+
+Virtual Proxy:要有一个factory控制真正的对象，每次创造一个proxy与之中的对象关联，销毁时销毁proxy
+
+Protection Proxy:控制访问权限规则
+
+最大连接数：创建一个队列。
+
+### Observer Pattern
+解决一种一对多的依赖。
+1.new subject
+
+2.new observer
+
+3.外界对它作出修改
+
+4.触发一个notify
+
+5.notify代码的内部，把list挨个update一遍
+
+6.Update里的逻辑

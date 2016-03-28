@@ -1,0 +1,137 @@
+#Linux 程序设计
+
+###Contents:
+
+1.Linux基础
+
+	- linux，安装，基本操作，开发
+	- Unix Philosophy
+2.Shell 编程
+	
+3.系统程序设计
+
+4.选讲驱动等内容
+	
+	-linux的驱动是一个什么样的结构
+	
+###Linux是什么？
+
+1.类unix系统
+	
+	-历史。。Mac OS 10 after
+	-BSD，System V，Minix
+2.copyleft
+	
+	-GPL:不允许二次开发拿出去卖钱
+3.安装方法
+
+	-Debian:要求所有的软件都开源，定了软件协议，跟GPL，GNU冲突了。FireFox－》Iceweasel ，Thunderbird－》IceDove
+	SeaMonkey－>Iceape Sunbird->IceOwl
+	
+4.MBRandGPT
+	
+	-Master Boot Record:
+	－GUID Partition Table Scheme
+	会影响硬盘分区的布局。分区。定文件系统
+	MBR：最多4个主分区，每个主分区最多4个扩展分区，上限4T
+	winxp，（vista？）不能装载GPT，GPT有时候会不识别
+	MBR，512B＋几K，之后全是自己的。
+	GPT最多128个主分区，最大	 
+	9.4Z（9.4*10^3E=9.4*10^6P=9.4*10^9T)
+	
+5.文件系统
+	
+	exfat：多用于U盘，比如大于128G。以及随机读写很慢
+	EXT3，EXT4:拷的碎文件占空间非常大
+	HFS＋：写文件。windows很不稳定。
+	
+6.引导
+	
+	BIOS／UEFI
+	
+###linux启动流程
+1.打开电源，进BIOS
+	
+	检查内存，加载设置
+	
+2.加载MBR
+
+3.加载Bootloader
+	
+	常用的bootloader是GRUB，
+	Windows有自己的bootloader
+	加载一段小程序。当系统中装了多个系统的时候。
+	一上来进入哪个系统的菜单是由这个小程序决定的。
+4.init
+	
+5.systemready
+
+
+###引导启动：EFI
+
+	efi允许boot写在磁盘上
+1.加载安全模块SEC
+
+2.Pre-EFI，初始化过程，包括初始化CPU，芯片组
+
+3.加载驱动
+
+4.选择BootDevice，包括网络启动，从不同设备启动
+
+5.（BIOS在这里就不再做事了）EFI在TSL，Runtime，Afterlife依然可以做一些事情。
+
+看MBR还是GPT的格式，**MBR看第一个扇区**，GPT看分区头
+
+引导程序在硬盘上可以放在：
+
+	某一个系统分区里，
+	单独分一个分区，
+	把linux的引导放在windows里，
+	甚至可以放在MBR的第一个扇区里。
+	
+###GRUB
+存在MBR中。understand file system structure
+
+boot/grub/grub.**cfg**
+
+grub-install to install grub in MBR
+
+
+###启动
+vmlinuz-3.2.0-4-686.pae位于boot下
+这是整个linux下面最核心的东西。
+始终都在内存里，基本上不能动。
+
+###增加引导
+root（hd0,0)
+
+chainloader+1
+
+使用系统会花很多时间讲。图形界面不讲。
+
+以讲命令行为主。CLIvsGUI	
+
+###Install software
+	tar zxcf application.tar.gz
+	cd application
+	./configure
+	make
+	su - 
+	make install
+第一步是解压。接着进入目录，配置编译，切到root做安装
+
+开源软件的哲学是什么？windows的哲学是把所有需要的文件打入setup.exe
+
+linux的哲学是发现系统里有没有，然后决定是否调用，是否能够安装，是否能够。。
+
+virtual terminal alt+fn
+
+###命令行
+所有的操作都可以由命令行完成。
+
+提示符怎么改：
+	
+	bashrc。每次登陆都会改
+	在命令行当中敲export 
+	SUDO_PS1 = "\u@\h:\w$"
+	不同的文件的颜色

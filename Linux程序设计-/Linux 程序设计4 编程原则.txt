@@ -1,0 +1,107 @@
+# Linux 程序设计4 编程原则
+
+越抽象，层次越高。
+
+meta-programming 元编程
+
+- ELF 格式 开源
+- android 
+- arm架构到intel架构，运行时翻译。一边翻译一边执行
+- GCC
+ - ar 库打包器
+ - ldd 动态库依赖查看器
+ - ld 连接器
+ - as 汇编器
+- 经过连接器，多个.o文件
+
+### 静态库和动态库
+
+xx.dll 是动态链接库文件
+
+编译的时候是不管函数实现的，只会告诉你函数未声明或者未定义。链接器会报函数找不到的错，只会告诉找不到不会告诉在哪
+
+### 其他语言的构造过程
+java:编译从.java->.class
+
+.net:一个平台，编译过程全改。编译到一个中间语言到CLI上运行。
+
+编译到本地的win编程
+
+
+### 前端和后端
+前端处理语言，后端处理平台
+
+RTL
+
+优化的部分主要在终端。
+
+gcc -c 编译
+gcc 是链接或者编译加链接
+
+### 常见的编译器参数
+-E，-S，-c，-o，-g，-O/On，-Wall
+-c 之后只能有一个。编译是一对一的。
+
+-Idir,-Ldir,-lname,-DMACRO
+
+- 头文件去哪里找呢？-Idir 直接给路径。同时拥有高优先级
+- -Ldir是链接参数。
+- 库文件的文件名需要做出一点修改。前面的lib会省略，后面的 .a 也会。lname 之间没有空格
+- -DMACRO=WIN32  脚本实现
+
+### 后缀
+- .S是必须要预处理的汇编
+
+### Makefile
+- make instll & make clean
+
+最广泛的是automake，cmake现在也在上升期。
+
+- tar zxvf application.tar.gz
+- cd application
+- ./configure 会自动产生一个 makefile
+- make 编译和连接
+- su - 
+- make install 安装
+
+一个具体的文件名也可以作为目标。一个 exe 或者 objectfiles
+
+目标文件如果在修改日期之后，依赖关系被认为得到满足
+
+所以下面的规则先被满足。直接敲make的时候是上面的编译链接
+
+- 注意：规则的目标依赖和规则命令之间不能空行；规则名称不能有缩进，规则后面的命令缩进一个tab，不能是两个空格
+
+#### 伪目标
+伪目标只是一个标签。不能与文件名重名。.phony 用来显式指定伪目标
+
+几个常见的伪目标：
+
+- clean 用来清理
+- all 
+
+- clean：-rm -f $(EXEC) *.elf *.gdb *.o
+- install:把编译链接产生的库拷贝到系统里面去
+- uninstall 卸载
+
+- distclean,clean,uninstall
+
+#### 多目标
+
+$(CC)$(LDFLAGS) -o $@ $(OBJS) $(EXTRA_LIBS)
+
+#### 预定义变量
+$<,$?,$+,$^,
+
+$% 指向归档成员。可以拿文件名的一部分 libm.a->m
+
+
+subst，strip，dir，basename（去扩展名）
+
+foreach
+
+if<condition>,<then-part>
+
+call <expression>,<param1>,<param2>...
+
+

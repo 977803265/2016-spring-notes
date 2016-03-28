@@ -1,0 +1,12 @@
+# 设计模式3
+
+
+## 递归结构
+Composite Pattern:Consequences
+
+- Simple Clients
+
+结构递归是静态结构 ，聚合
+
+行为递归是委托。委托结构--pipe filter？
+消息总线模式。

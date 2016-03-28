@@ -1,0 +1,15 @@
+# Linux 文件系统
+
+文件类型*7 ！！！！
+
+系统通过 VFS ，对上的接口是读，写，打开等等。对下会根据具体情况实现
+
+SUID,SGID,当前文件设置别的文件权限的能力。
+
+Sticky bit:仅有创建者可删的文件夹。比如/tmp，几个用户互斥删除。root想删谁删谁。目录拥有者也有权限删，
+
+getcwd  = pwd
+
+typedef struct __dirstream DIR;
+
+/proc/sys/fs/ease-break-time 下 规定了文件锁相关参数
